@@ -33,11 +33,26 @@ void jl_nt_push_data(jl_nt_t* jl_nt, str_t name, void* data,
 	NT_SetEntryRaw(name, strlen(name), data, datasize, 1);
 }
 
-u8_t jl_nt_pull_bool(jl_nt_t* jl_nt, str_t name) {
-	int boolean;
+f64_t jl_nt_pull_num(jl_nt_t* jl_nt, str_t name, f64_t set) {
+	double rtn;
 	unsigned long long last_change; // How defined in network tables.
-	NT_GetEntryBoolean(name, strlen(name), &last_change, &boolean);
-	return boolean;
+	if(NT_GetEntryDouble(name, strlen(name), &last_change, &rtn)) {
+		return rtn;
+	}else{
+		jl_nt_push_num(jl_nt, name, set);
+		return set;
+	}
+}
+
+u8_t jl_nt_pull_bool(jl_nt_t* jl_nt, str_t name, u8_t set) {
+	int rtn;
+	unsigned long long last_change; // How defined in network tables.
+	if(NT_GetEntryBoolean(name, strlen(name), &last_change, &rtn)) {
+		return rtn;
+	}else{
+		jl_nt_push_bool(jl_nt, name, set);
+		return set;
+	}
 }
 
 void jl_nt_kill(jl_nt_t* jl_nt) {
