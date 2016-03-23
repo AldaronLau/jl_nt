@@ -9,8 +9,7 @@
 }*/
 
 jl_nt_t* jl_nt_init(jl_t* jlc, str_t hostname) {
-	jl_nt_t* jl_nt = NULL;
-	jl_me_alloc(jlc, (void**)&jl_nt, sizeof(jl_nt_t), 0);
+	jl_nt_t* jl_nt = jl_memi(jlc, sizeof(jl_nt_t));
 	jl_nt->jlc = jlc;
 	// Load the library
 	// jl_nt_loadnt(jl_nt);
