@@ -33,6 +33,16 @@ void jl_nt_push_data(jl_nt_t* jl_nt, str_t name, void* data,
 	NT_SetEntryRaw(name, strlen(name), data, datasize, 1);
 }
 
+f64_t jl_nt_get_num(jl_nt_t* jl_nt, str_t name) {
+	double rtn = 0.;
+	unsigned long long last_change; // How defined in network tables.
+	if(NT_GetEntryDouble(name, strlen(name), &last_change, &rtn)) {
+		return rtn;
+	}else{
+		return rtn;
+	}
+}
+
 f64_t jl_nt_pull_num(jl_nt_t* jl_nt, str_t name, f64_t set) {
 	double rtn;
 	unsigned long long last_change; // How defined in network tables.
